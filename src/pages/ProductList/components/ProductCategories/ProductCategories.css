@@ -1,0 +1,25 @@
+.product-categories-container {
+    display: flex;
+    gap: 10px;
+    overflow: scroll;
+     /* Hide scrollbar for Chrome, Safari and Opera */
+     &::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Hide scrollbar for IE, Edge and Firefox */
+    
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.button-category {
+    padding: .5rem;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.button-category--state-selected {
+    background-color: black;
+    color: white;
+}

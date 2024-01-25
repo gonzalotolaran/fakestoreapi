@@ -1,6 +1,31 @@
-.product-detail-image {
-    border-radius: 10px;
-    background-color: blue;
-    width: 100%;
-    
+.productsContainer {
+    padding: 0px 10px;
+
+
+    > section {
+        margin-top: 10px;
+
+        img.product-detail-image {
+            width: 100%;
+            object-fit: contain;
+            aspect-ratio: 1;
+        }
+
+        .product-rating {
+            display: flex;
+
+            .product-rate {
+                display: flex;
+                margin-right: 10px;
+            }
+        }   
+
+        button {
+            margin-left: 10px;
+            min-width: 200px;
+            background-color: black;
+            color: white;
+        }
+
+    }
 }

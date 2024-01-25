@@ -16,6 +16,10 @@ const ProductDetail = () => {
     navigate(-1)
   }
 
+  const handleAddToCart = () => {
+    
+  }
+
   return (
     <div className='productsContainer'>
       <nav>
@@ -23,11 +27,24 @@ const ProductDetail = () => {
       </nav>
 
       <section>
-
-        <div>
-          Este es el detalle del producto
+        <img className='product-detail-image' src={product.image} alt="imagen del producto" />
+        
+        <div className="product-rating">
+          <div className="product-rate">
+            {product.rating.rate}
+          </div>
+          <div className="product-reviews">
+            {product.rating.count} reviews
+          </div>
         </div>
-        <img className='product-detail-image' src={product.image} alt="imagen del prodcuto" />
+
+        <h1>{product.title}</h1>
+
+        <p>{product.description}</p>
+
+        <span>$ {product.price}</span>
+
+        <button onClick={handleAddToCart}>Add to Cart</button>
 
       </section>
     </div>

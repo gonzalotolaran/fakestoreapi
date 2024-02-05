@@ -23,7 +23,7 @@ const CartItem : FC<CartItemProps> = ({item}) => {
   }
 
   return (
-    <article>
+    <article className='cart-item-container'>
       <div>
         <img src={item.image} alt="imagen" />
       </div>

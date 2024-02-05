@@ -1,6 +1,10 @@
 .productsContainer {
     padding: 0px 10px;
 
+    > nav {
+        display: flex;
+        justify-content: space-between;
+    }
 
     > section {
         margin-top: 10px;

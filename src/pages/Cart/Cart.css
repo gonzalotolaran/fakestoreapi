@@ -1,0 +1,16 @@
+.cartContainer {
+    > nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        /* > div:nth-child(3) {
+            background-color: violet;
+        } */
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+    }
+}

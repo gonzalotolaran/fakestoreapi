@@ -3,15 +3,30 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 
 // Define a type for the slice state
+
+export interface ProductItem {
+  id: number;
+  title: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
+
+interface CartItems {
+  [key: number]: ProductItem
+}
+
 interface CarState {
   numberOfItems: number;
-  items: Map<string, any>;
+  items: CartItems;
+  itemOrder: number[];
 }
 
 // Define the initial state using that type
 const initialState: CarState = {
   numberOfItems: 0,
-  items: new Map()
+  items: {},
+  itemOrder: []
 }
 
 export const cartSlice = createSlice({
@@ -19,22 +34,24 @@ export const cartSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    addToCart: (state) => {
-      state.numberOfItems += 1;
+    addToCart: (state, action: PayloadAction<ProductItem>) => {
+      state.numberOfItems += action.payload.quantity;
+      state.items[action.payload.id] = action.payload;
+      state.itemOrder.push(action.payload.id);
     }, 
-    incrementProduct: (state) => {
-
+    incrementProduct: (state, action: PayloadAction<{id: number}>) => {
+      state.items[action.payload.id].quantity++;
     },
-    decrementProduct: (state) => {
-
+    decrementProduct: (state, action: PayloadAction<{id: number}>) => {
+      state.items[action.payload.id].quantity--;
     },
-    deleteProduct: (state) => {
+    deleteProduct: (state, action: PayloadAction<{id: number}>) => {
+      delete state.items[action.payload.id];
 
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
+      const indexToRemove = state.itemOrder.indexOf(action.payload.id);
+      state.itemOrder.splice(indexToRemove, 1); 
 
-    },
+    }
   },
 })
 
@@ -43,9 +60,11 @@ export const {
   incrementProduct, 
   decrementProduct, 
   deleteProduct, 
-  incrementByAmount } = cartSlice.actions
+} = cartSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectNumberOfCartItems = (state: RootState) => state.cart.numberOfItems;
+export const selectItems = (state: RootState) => state.cart.items;
+export const selectItemOrder = (state: RootState) => state.cart.itemOrder;
 
 export default cartSlice.reducer

@@ -1,7 +1,10 @@
-import { Params, useLoaderData, useNavigate } from 'react-router-dom';
+import { Params, useLoaderData, useNavigate, ScrollRestoration } from 'react-router-dom';
 import { getSingleProductHandler } from '../../modules/product/product.service';
 import { Product } from '../../modules/product/product.types';
 import "./ProductDetail.css";
+
+import {useDispatch} from 'react-redux';
+import {addToCart} from '../../store/redux-toolkit/cart/cartSlice';
 
 export async function loader({ params }: {params: Params}) {
   const {data, hasError} = await getSingleProductHandler(params.productId || "");
@@ -10,20 +13,33 @@ export async function loader({ params }: {params: Params}) {
 
 const ProductDetail = () => {
 
+  const dispatch = useDispatch();
   const product = useLoaderData() as Product;
   const navigate = useNavigate();
+
   const handleClickBack = () => {
     navigate(-1)
   }
+  const handleViewCart = () => {
+    navigate("/cart")
+  }
 
   const handleAddToCart = () => {
-    
+    dispatch(addToCart({
+      id: product.id,
+      price: product.price,
+      title: product.title,
+      quantity: 1,
+      image: product.image
+    }))
   }
 
   return (
     <div className='productsContainer'>
+      <ScrollRestoration />
       <nav>
         <button type='button' onClick={handleClickBack}>Regresar</button>
+        <button type='button' onClick={handleViewCart}>Ver el carrito</button>
       </nav>
 
       <section>
